@@ -10,10 +10,7 @@ async function getData(country){
   displayDaythree();
 }
 getData('cairo');
-searchInput.addEventListener('keyup', function(){
-  let search = searchInput.value;
-  getData(search);
-})
+
 function displayWeather(){
     let currentData = new Date(dataList.forecast.forecastday[0].date);
     let day = days[currentData.getDay()];
@@ -99,8 +96,9 @@ function  displayDaythree(){
     `;
         document.getElementById('dayThree').innerHTML =dayThree;
     }
-
-
-
+    searchInput.addEventListener('keyup', function(){
+      let search = searchInput.value;
+      getData(search);
+    })
 
 
