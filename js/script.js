@@ -3,21 +3,22 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let dataList=[];
 async function getData(country){
-  let resp = await(await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2d296ad93f4f48a8af9145058241401&q=${country}&days=3`)).json();
-  dataList= resp;
+let resp = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2d296ad93f4f48a8af9145058241401&q=${country}&days=3`);
+let finalResp = await resp.json();
+dataList= finalResp;
   displayWeather();
   displaynextDay();
   displayDaythree();
 }
 getData('cairo');
-
 function displayWeather(){
     let currentData = new Date(dataList.forecast.forecastday[0].date);
     let day = days[currentData.getDay()];
     let date = currentData.getDate();
     let mons = new Date(dataList.forecast.forecastday[0].date);
     let month = months[mons.getMonth()];
-    let weather = ` <div class="card text-white h-100 ">
+    
+    let weather = ` <div class="card text-white h-100  ">
     <div class="card-header d-flex justify-content-between">
     <span>${day}</span> <span > ${date+month}</span></div> 
     <div class="card-body pt-3 p-2">
@@ -29,6 +30,7 @@ function displayWeather(){
        <p>${dataList.current.condition.text}</p>
      </div>
        </div>
+
     <div class="icons1"> 
        <div>
        <i class="fa-solid fa-umbrella"></i>
@@ -64,9 +66,11 @@ let nextDay=`
         <div class="min">
           <span>${dataList.forecast.forecastday[1].day.mintemp_c}<sup>o</sup></span>
         </div>
+    
         <div class="description pt-3 ">
           <span>${dataList.forecast.forecastday[1].day.condition.text}</span>
         </div>
+
     </div>
     </div>
 `;
@@ -80,7 +84,9 @@ function  displayDaythree(){
     <div class="card-header">
     <div class="title2"><span>${day}</span></div>
   </div>
+        
         <div class="card-body ">
+        
             <img src='https:${dataList.forecast.forecastday[2].day.condition.icon}' alt="First slide" width="50%">
             <div class="max">
               <span>${dataList.forecast.forecastday[2].day.maxtemp_c}<sup>o</sup>C</span>
@@ -88,6 +94,7 @@ function  displayDaythree(){
             <div class="min">
               <span>${dataList.forecast.forecastday[2].day.mintemp_c}<sup>o</sup></span>
             </div>
+        
             <div class="description pt-3">
               <span>${dataList.forecast.forecastday[2].day.condition.text}</span>
             </div>
@@ -96,9 +103,12 @@ function  displayDaythree(){
     `;
         document.getElementById('dayThree').innerHTML =dayThree;
     }
-    searchInput.addEventListener('keyup', function(){
-      let search = searchInput.value;
-      getData(search);
-    })
+  searchInput.addEventListener('keyup', function(){
+    let search = searchInput.value;
+    getData(search);
+})
+
+
+
 
 
