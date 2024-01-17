@@ -2,8 +2,8 @@ let searchInput = document.getElementById('search');
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let dataList=[];
-async function getData(country){
-let resp = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2d296ad93f4f48a8af9145058241401&q=${country}&days=3`);
+async function getData(country){                                    
+let resp = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=2d296ad93f4f48a8af9145058241401&q=${country}&days=3`);
 let finalResp = await resp.json();
 dataList= finalResp;
   displayWeather();
@@ -11,16 +11,15 @@ dataList= finalResp;
   displayDaythree();
 }
 getData('cairo');
-function displayWeather(){
+ function displayWeather(){
     let currentData = new Date(dataList.forecast.forecastday[0].date);
-    let day = days[currentData.getDay()];
-    let date = currentData.getDate();
-    let mons = new Date(dataList.forecast.forecastday[0].date);
-    let month = months[mons.getMonth()];
+    let date = days[currentData.getDay()];
+    let day = currentData.getDate();
+    let month = months[currentData.getMonth()];
     
     let weather = ` <div class="card text-white h-100  ">
     <div class="card-header d-flex justify-content-between">
-    <span>${day}</span> <span > ${date+month}</span></div> 
+    <span>${date}</span> <span > ${day+month}</span></div> 
     <div class="card-body pt-3 p-2">
       <h5 class="title">${dataList.location.name}</h5>
      <div class="c">
